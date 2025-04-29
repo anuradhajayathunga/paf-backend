@@ -29,7 +29,7 @@ public class PostController {
     }
 
     @DeleteMapping("/delete/{postId}")
-    public ResponseEntity<ApiResponse> getPost(@PathVariable Integer postId,@RequestHeader("Authorization") String token) throws Exception {
+    public ResponseEntity<ApiResponse> deletePost(@PathVariable Integer postId,@RequestHeader("Authorization") String token) throws Exception {
         User reqUser = userService.findUserByJwtToken(token);
         String message=postService.deletePost(postId,reqUser.getId());
         ApiResponse res=new ApiResponse(message,true);
