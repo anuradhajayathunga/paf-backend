@@ -3,6 +3,7 @@ package com.skillshiring.demo.service;
 import com.skillshiring.demo.Repository.CommentRepo;
 import com.skillshiring.demo.Repository.PostRepo;
 import com.skillshiring.demo.Repository.UserRepo;
+import com.skillshiring.demo.exceptions.UserException;
 import com.skillshiring.demo.models.Comment;
 import com.skillshiring.demo.models.Post;
 import com.skillshiring.demo.models.User;
@@ -29,7 +30,7 @@ public class PostServiceImplement implements PostService {
     private CommentRepo commentRepository;
 
     @Override
-    public Post createPost(Post post, Integer userId)  {
+    public Post createPost(Post post, Integer userId) throws UserException {
 
         User user=userService.findUserById(userId);
         Post newPost = new Post();

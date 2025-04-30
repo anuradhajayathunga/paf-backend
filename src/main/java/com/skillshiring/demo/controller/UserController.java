@@ -1,6 +1,7 @@
 package com.skillshiring.demo.controller;
 
 import com.skillshiring.demo.Repository.UserRepo;
+import com.skillshiring.demo.exceptions.UserException;
 import com.skillshiring.demo.models.User;
 import com.skillshiring.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,21 +28,21 @@ public class UserController {
     }
 
     @GetMapping("/user/{userId}")
-    public User getUserById(@PathVariable("userId") Integer id) {
+    public User getUserById(@PathVariable("userId") Integer id) throws UserException {
         User user=userService.findUserById(id);
         return user;
     }
 
 
     @PutMapping("/update-user")
-    public User updateUser(@RequestHeader("Authorization") String token,@RequestBody User user) {
+    public User updateUser(@RequestHeader("Authorization") String token,@RequestBody User user) throws UserException {
         User reqUser=userService.findUserByJwtToken(token);
         User updateuser=userService.updateUser(user,reqUser.getId());
         return updateuser;
     }
 
     @PutMapping("/follow-user/{userId2}")
-    public User followUserHandler(@RequestHeader("Authorization") String token,@PathVariable Integer userId2) {
+    public User followUserHandler(@RequestHeader("Authorization") String token,@PathVariable Integer userId2) throws UserException {
         User reqUser = userService.findUserByJwtToken(token);
         User user=userService.followUser(reqUser.getId(),userId2);
         return user;
