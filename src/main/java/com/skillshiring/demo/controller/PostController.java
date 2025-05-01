@@ -28,7 +28,7 @@ public class PostController {
         return new ResponseEntity<>(createdPost, HttpStatus.ACCEPTED);
     }
 
-    @DeleteMapping("/delete/{postId}")
+    @DeleteMapping("/api/delete/posts/{postId}")
     public ResponseEntity<ApiResponse> deletePost(@PathVariable Integer postId,@RequestHeader("Authorization") String token) throws Exception {
         User reqUser = userService.findUserByJwtToken(token);
         String message=postService.deletePost(postId,reqUser.getId());
@@ -68,9 +68,10 @@ public class PostController {
         return new ResponseEntity<Post>(post,HttpStatus.ACCEPTED);
     }
 
-    @PutMapping("/update/{postId}/user/{userId}")
-    public Post updatePost(@PathVariable Integer postId, @PathVariable Integer userId, @RequestBody Post updatedPostData) throws Exception {
-        return postService.updatePost(postId, userId, updatedPostData);
+    @PutMapping("/api/update/posts/{postId}")
+    public Post updatePost(@PathVariable Integer postId, @RequestHeader("Authorization") String token, @RequestBody Post updatedPostData) throws Exception {
+        User reqUser = userService.findUserByJwtToken(token);
+        return postService.updatePost(postId, reqUser.getId(), updatedPostData);
     }
 
     @PutMapping("/post/like/{postId}")
@@ -80,10 +81,11 @@ public class PostController {
 
         return new ResponseEntity<Post>(post,HttpStatus.ACCEPTED);
     }
-    @PostMapping("/comment/{postId}/user/{userId}")
-    public Post commentOnPost(@PathVariable Integer postId, @PathVariable Integer userId,
+    @PostMapping("/api/comment/post/{postId}")
+    public Post commentOnPost(@PathVariable Integer postId, @RequestHeader("Authorization") String token,
                               @RequestBody Comment comment) throws Exception {
-        return postService.commentPost(postId, userId, comment);
+        User reqUser = userService.findUserByJwtToken(token);
+        return postService.commentPost(postId,reqUser.getId(),comment);
     }
 //    @GetMapping("post/{postId}/comments")
 //    public List<Comment> getCommentsForPost(@PathVariable Integer postId) throws Exception {
