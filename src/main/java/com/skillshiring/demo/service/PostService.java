@@ -1,6 +1,5 @@
 package com.skillshiring.demo.service;
 
-import com.skillshiring.demo.models.Comment;
 import com.skillshiring.demo.models.Post;
 
 import java.util.List;
@@ -23,6 +22,6 @@ public interface PostService {
 
     Post likePost(Integer postId,Integer userId) throws Exception;
 
-    Post commentPost(Integer postId, Integer userId, Comment commentData) throws Exception;
+
 
 }

@@ -3,6 +3,7 @@ package com.skillshiring.demo.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,6 +36,7 @@ public class User {
 //
 //    @ManyToMany(mappedBy = "likes")
 //    private List<Post> likedPosts;
+    private LocalDateTime createdAt;
 
 
     public User(){}

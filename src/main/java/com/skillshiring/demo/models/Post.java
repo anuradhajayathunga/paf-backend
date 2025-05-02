@@ -16,6 +16,7 @@ public class Post {
 
     private String caption;
     private String keywords;
+    private String category;
     private String img;
     private String video;
 
@@ -36,23 +37,42 @@ public class Post {
     @OneToMany
     private List<User> likes=new ArrayList<>();
 
+    @OneToMany
+    private List<Comment> comments=new ArrayList<>();
+
 
 
     public Post() {}
 
-    public Post(Integer id, String caption, String keywords, String img, String video, User user, LocalDateTime createdAt, LocalDateTime updatedAt, List<User> likes) {
+    public Post(Integer id, String caption, String keywords, String category, String img, String video, User user, LocalDateTime createdAt, LocalDateTime updatedAt, List<User> likes, List<Comment> comments) {
         this.id = id;
         this.caption = caption;
         this.keywords = keywords;
+        this.category = category;
         this.img = img;
         this.video = video;
         this.user = user;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.likes = likes;
+        this.comments = comments;
     }
 
+    public String getCategory() {
+        return category;
+    }
 
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
 
     public Integer getId() {
         return id;

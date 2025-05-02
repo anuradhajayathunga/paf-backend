@@ -1,6 +1,5 @@
 package com.skillshiring.demo.controller;
 
-import com.skillshiring.demo.models.Comment;
 import com.skillshiring.demo.models.Post;
 import com.skillshiring.demo.models.User;
 import com.skillshiring.demo.response.ApiResponse;
@@ -81,12 +80,12 @@ public class PostController {
 
         return new ResponseEntity<Post>(post,HttpStatus.ACCEPTED);
     }
-    @PostMapping("/api/comment/post/{postId}")
-    public Post commentOnPost(@PathVariable Integer postId, @RequestHeader("Authorization") String token,
-                              @RequestBody Comment comment) throws Exception {
-        User reqUser = userService.findUserByJwtToken(token);
-        return postService.commentPost(postId,reqUser.getId(),comment);
-    }
+//    @PostMapping("/comment/post/{postId}")
+//    public Post commentOnPost(@PathVariable Integer postId, @RequestHeader("Authorization") String token,
+//                              @RequestBody Comment comment) throws Exception {
+//        User reqUser = userService.findUserByJwtToken(token);
+//        return postService.commentPost(postId,reqUser.getId(),comment);
+//    }
 //    @GetMapping("post/{postId}/comments")
 //    public List<Comment> getCommentsForPost(@PathVariable Integer postId) throws Exception {
 //        Post post = postService.findPostById(postId);

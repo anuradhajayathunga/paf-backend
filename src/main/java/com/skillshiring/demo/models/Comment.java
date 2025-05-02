@@ -1,9 +1,10 @@
 package com.skillshiring.demo.models;
 
 import jakarta.persistence.*;
-import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Comment {
@@ -11,26 +12,30 @@ public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
+    private String comment;
 
-    private String content;
+//    @ManyToOne
+//    @JoinColumn(name = "post_id")
+//    private Post post;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private User user; // Who made the comment
+    private User user;
 
-    @ManyToOne
-    @JoinColumn(name = "post_id")
-    private Post post; // The post this comment belongs to
+    @ManyToMany
+    private List<User> likes=new ArrayList<>();
 
-    @CreationTimestamp
+
     private LocalDateTime createdAt;
 
     public Comment() {}
 
-    public Comment(String content, User user, Post post) {
-        this.content = content;
+    public Comment(Integer id, String comment, User user, List<User> likes, LocalDateTime createdAt) {
+        this.id = id;
+        this.comment = comment;
         this.user = user;
-        this.post = post;
+        this.likes = likes;
+        this.createdAt = createdAt;
     }
 
     public Integer getId() {
@@ -41,12 +46,12 @@ public class Comment {
         this.id = id;
     }
 
-    public String getContent() {
-        return content;
+    public String getComment() {
+        return comment;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 
     public User getUser() {
@@ -57,12 +62,12 @@ public class Comment {
         this.user = user;
     }
 
-    public Post getPost() {
-        return post;
+    public List<User> getLikes() {
+        return likes;
     }
 
-    public void setPost(Post post) {
-        this.post = post;
+    public void setLikes(List<User> likes) {
+        this.likes = likes;
     }
 
     public LocalDateTime getCreatedAt() {
@@ -72,6 +77,4 @@ public class Comment {
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
-
-
 }

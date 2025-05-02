@@ -4,7 +4,6 @@ import com.skillshiring.demo.Repository.CommentRepo;
 import com.skillshiring.demo.Repository.PostRepo;
 import com.skillshiring.demo.Repository.UserRepo;
 import com.skillshiring.demo.exceptions.UserException;
-import com.skillshiring.demo.models.Comment;
 import com.skillshiring.demo.models.Post;
 import com.skillshiring.demo.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -140,10 +139,7 @@ public class PostServiceImplement implements PostService {
         return post;
     }
 
-    @Override
-    public Post commentPost(Integer postId, Integer userId, Comment commentData) throws Exception {
-        return null;
-    }
+
 
 //    @Override
 //    public Post commentPost(Integer postId, Integer userId, Comment commentData) throws Exception {
