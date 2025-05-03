@@ -1,0 +1,31 @@
+package com.photolearn.learningplatform.entity;
+
+import jakarta.persistence.*;
+import lombok.*;
+import java.time.LocalDate;
+
+@Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class LearningProgress {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private Long userId;
+    private String title;
+    private String description;
+    private LocalDate completedDate; // This is your "date" field from frontend
+
+    private Integer duration;  // New Field: in minutes
+    private String status;     // New Field: "Not Started", "In Progress", "Completed"
+    private String category;   // New Field: Programming, Design, etc
+    @Column(length = 1000)      // Optional: make bigger
+    private String reflections; // New Field: text area
+    @Column(length = 1000)      // Optional: make bigger
+    private String resources;   // New Field: text area
+
+}
