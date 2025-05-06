@@ -19,6 +19,7 @@ public class LearningProgress {
     private String title;
     private String description;
     private LocalDate completedDate; // This is your "date" field from frontend
+    private LocalDate startDate;     // New Field: Start date from frontend
 
     private Integer duration;  // New Field: in minutes
     private String status;     // New Field: "Not Started", "In Progress", "Completed"
