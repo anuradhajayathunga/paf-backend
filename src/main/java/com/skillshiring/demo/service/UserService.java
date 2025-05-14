@@ -1,6 +1,7 @@
 package com.skillshiring.demo.service;
 
 import com.skillshiring.demo.exceptions.UserException;
+import com.skillshiring.demo.models.Post;
 import com.skillshiring.demo.models.User;
 
 import java.util.List;
@@ -22,4 +23,10 @@ public interface UserService {
     public List<User> searchUser(String query);
 
     public User findUserByJwtToken(String jwtToken);
+
+    public List<Post> getSavedPostsByUserId(Integer userId) throws UserException;
+
+    public void savePostForUser(Integer userId, Integer postId) throws UserException;
+
+    public void removeSavedPostForUser(Integer userId, Integer postId) throws UserException;
 }
