@@ -80,6 +80,11 @@ public class PostController {
 
         return new ResponseEntity<Post>(post,HttpStatus.ACCEPTED);
     }
+    @GetMapping("/search/post")
+    public List<Post> searchPost(@RequestParam ("query") String query) {
+        List<Post> posts =postService.searchPost(query);
+        return posts;
+    }
 //    @PostMapping("/comment/post/{postId}")
 //    public Post commentOnPost(@PathVariable Integer postId, @RequestHeader("Authorization") String token,
 //                              @RequestBody Comment comment) throws Exception {

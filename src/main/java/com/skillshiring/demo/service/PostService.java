@@ -1,6 +1,7 @@
 package com.skillshiring.demo.service;
 
 import com.skillshiring.demo.models.Post;
+import com.skillshiring.demo.models.User;
 
 import java.util.List;
 
@@ -21,6 +22,9 @@ public interface PostService {
     Post updatePost(Integer postId, Integer userId, Post updatedPostData) throws Exception;
 
     Post likePost(Integer postId,Integer userId) throws Exception;
+
+    public List<Post> searchPost(String query);
+
 
 
 

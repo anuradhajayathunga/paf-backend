@@ -139,6 +139,11 @@ public class PostServiceImplement implements PostService {
         return post;
     }
 
+    @Override
+    public List<Post> searchPost(String query) {
+        return postRepo.searchPost(query);
+
+    }
 
 
 //    @Override
