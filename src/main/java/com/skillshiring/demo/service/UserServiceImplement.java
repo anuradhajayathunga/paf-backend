@@ -1,7 +1,10 @@
 package com.skillshiring.demo.service;
 
+import com.skillshiring.demo.Repository.PostRepo;
 import com.skillshiring.demo.Repository.UserRepo;
 import com.skillshiring.demo.config.JwtProvider;
+import com.skillshiring.demo.exceptions.UserException;
+import com.skillshiring.demo.models.Post;
 import com.skillshiring.demo.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +16,9 @@ import java.util.Optional;
 public class UserServiceImplement implements UserService {
     @Autowired
     UserRepo userRepo;
+
+    @Autowired
+    PostRepo postRepo;
 
 
     @Override
@@ -150,5 +156,38 @@ public class UserServiceImplement implements UserService {
         String email= JwtProvider.getEmailFromToken(jwtToken);
         User user=userRepo.findByEmail(email);
         return user;
+    }
+
+    @Override
+    public List<Post> getSavedPostsByUserId(Integer userId) throws UserException {
+        User user = userRepo.findById(userId)
+                .orElseThrow(() -> new UserException("User not found with ID: " + userId));
+        return user.getSavedPosts();
+    }
+
+    @Override
+    public void savePostForUser(Integer userId, Integer postId) throws UserException {
+        User user = userRepo.findById(userId)
+                .orElseThrow(() -> new UserException("User not found with ID: " + userId));
+        Post post = postRepo.findById(postId)
+                .orElseThrow(() -> new UserException("Post not found with ID: " + postId));
+
+        if (!user.getSavedPosts().contains(post)) {
+            user.getSavedPosts().add(post);
+            userRepo.save(user);
+        }
+    }
+
+    @Override
+    public void removeSavedPostForUser(Integer userId, Integer postId) throws UserException {
+        User user = userRepo.findById(userId)
+                .orElseThrow(() -> new UserException("User not found with ID: " + userId));
+        Post post = postRepo.findById(postId)
+                .orElseThrow(() -> new UserException("Post not found with ID: " + postId));
+
+        if (user.getSavedPosts().contains(post)) {
+            user.getSavedPosts().remove(post);
+            userRepo.save(user);
+        }
     }
 }

@@ -3,6 +3,7 @@ package com.skillshiring.demo.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +28,12 @@ public class User {
 
     @JsonIgnore
     @ManyToMany
-    private List<Post> savedPosts;
+    @JoinTable(
+            name = "user_saved_posts",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "post_id")
+    )
+    private List<Post> savedPosts = new ArrayList<>();;
 
     // Relations
 //    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
@@ -35,6 +41,7 @@ public class User {
 //
 //    @ManyToMany(mappedBy = "likes")
 //    private List<Post> likedPosts;
+    private LocalDateTime createdAt;
 
 
     public User(){}

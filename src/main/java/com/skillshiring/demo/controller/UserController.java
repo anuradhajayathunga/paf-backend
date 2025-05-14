@@ -2,9 +2,11 @@ package com.skillshiring.demo.controller;
 
 import com.skillshiring.demo.Repository.UserRepo;
 import com.skillshiring.demo.exceptions.UserException;
+import com.skillshiring.demo.models.Post;
 import com.skillshiring.demo.models.User;
 import com.skillshiring.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -86,4 +88,29 @@ public class UserController {
         user.setPassword(null);
         return user;
     }
+
+    // ✅ Get all saved posts for the authenticated user
+    @GetMapping("/user/saved-posts")
+    public ResponseEntity<List<Post>> getSavedPostsByUser(@RequestHeader("Authorization") String token) throws UserException {
+        User reqUser = userService.findUserByJwtToken(token);
+        List<Post> savedPosts = userService.getSavedPostsByUserId(reqUser.getId());
+        return ResponseEntity.ok(savedPosts);
+    }
+
+    // ✅ Save a post for the authenticated user
+    @PostMapping("/user/save-post/{postId}")
+    public ResponseEntity<String> savePostForUser(@RequestHeader("Authorization") String token, @PathVariable Integer postId) throws UserException {
+        User reqUser = userService.findUserByJwtToken(token);
+        userService.savePostForUser(reqUser.getId(), postId);
+        return ResponseEntity.ok("Post saved successfully.");
+    }
+
+    // ✅ Remove a post from saved list for the authenticated user
+    @DeleteMapping("/user/remove-saved-post/{postId}")
+    public ResponseEntity<String> removeSavedPost(@RequestHeader("Authorization") String token, @PathVariable Integer postId) throws UserException {
+        User reqUser = userService.findUserByJwtToken(token);
+        userService.removeSavedPostForUser(reqUser.getId(), postId);
+        return ResponseEntity.ok("Post removed from saved list.");
+    }
+
 }
