@@ -36,7 +36,8 @@ public class PostServiceImplement implements PostService {
         newPost.setId(post.getId());
         newPost.setCaption(post.getCaption());
         newPost.setKeywords(post.getKeywords());
-        newPost.setImg(post.getImg());
+        newPost.setCategory(post.getCategory());
+        newPost.setImages(post.getImages());       // ← list of image URLs from Cloudinary
         newPost.setVideo(post.getVideo());
         newPost.setUser(user);
         newPost.setLikes(post.getLikes());
@@ -111,6 +112,9 @@ public class PostServiceImplement implements PostService {
             if (updatedPostData.getKeywords() != null) {
                 existingPost.setKeywords(updatedPostData.getKeywords());
             }
+            if (updatedPostData.getCategory() != null) {
+                existingPost.setCategory(updatedPostData.getCategory());
+            }
 
             existingPost.setUpdatedAt(java.time.LocalDateTime.now());
 
@@ -128,15 +132,17 @@ public class PostServiceImplement implements PostService {
         User user = userRepo.findById(userId)
                 .orElseThrow(() -> new Exception("User not found"));
 
-        // Check if user already liked the post
-        if (!post.getLikes().contains(user)) {
-            post.getLikes().add(user);
-            postRepo.save(post);
+        // Toggle like status
+        if (post.getLikes().contains(user)) {
+            // Unlike: If user already liked the post, remove the like
+            post.getLikes().remove(user);
         } else {
-            throw new Exception("User already liked this post");
+            // Like: If user hasn't liked the post yet, add the like
+            post.getLikes().add(user);
         }
 
-        return post;
+        // Save the updated post
+        return postRepo.save(post);
     }
 
     @Override
