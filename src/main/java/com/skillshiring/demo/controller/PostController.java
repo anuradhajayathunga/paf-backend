@@ -21,11 +21,13 @@ public class PostController {
     private UserService userService;
 
     @PostMapping("api/posts")
-    public ResponseEntity<Post> createPost(@RequestHeader("Authorization") String token,@RequestBody Post post) throws Exception {
+    public ResponseEntity<Post> createPost(@RequestHeader("Authorization") String token,
+                                           @RequestBody Post post) throws Exception {
         User reqUser = userService.findUserByJwtToken(token);
-        Post createdPost=postService.createPost(post,reqUser.getId());
+        Post createdPost = postService.createPost(post, reqUser.getId());
         return new ResponseEntity<>(createdPost, HttpStatus.ACCEPTED);
     }
+
 
     @DeleteMapping("/api/delete/posts/{postId}")
     public ResponseEntity<ApiResponse> deletePost(@PathVariable Integer postId,@RequestHeader("Authorization") String token) throws Exception {

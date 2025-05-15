@@ -36,7 +36,8 @@ public class PostServiceImplement implements PostService {
         newPost.setId(post.getId());
         newPost.setCaption(post.getCaption());
         newPost.setKeywords(post.getKeywords());
-        newPost.setImg(post.getImg());
+        newPost.setCategory(post.getCategory());
+        newPost.setImages(post.getImages());       // ← list of image URLs from Cloudinary
         newPost.setVideo(post.getVideo());
         newPost.setUser(user);
         newPost.setLikes(post.getLikes());
@@ -110,6 +111,9 @@ public class PostServiceImplement implements PostService {
             }
             if (updatedPostData.getKeywords() != null) {
                 existingPost.setKeywords(updatedPostData.getKeywords());
+            }
+            if (updatedPostData.getCategory() != null) {
+                existingPost.setCategory(updatedPostData.getCategory());
             }
 
             existingPost.setUpdatedAt(java.time.LocalDateTime.now());

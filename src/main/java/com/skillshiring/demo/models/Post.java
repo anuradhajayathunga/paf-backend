@@ -15,9 +15,15 @@ public class Post {
     private Integer id;
 
     private String caption;
-    private String keywords;
+    @ElementCollection
+    @CollectionTable(name = "post_keywords", joinColumns = @JoinColumn(name = "post_id"))
+    @Column(name = "keyword")
+    private List<String> keywords = new ArrayList<>();;
     private String category;
-    private String img;
+    @ElementCollection
+    @CollectionTable(name = "post_images", joinColumns = @JoinColumn(name = "post_id"))
+    @Column(name = "image_url")
+    private List<String> images = new ArrayList<>();
     private String video;
 
 
@@ -31,9 +37,6 @@ public class Post {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
-//    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-//    private List<Comment> comments = new ArrayList<>();
-
     @ManyToMany
     private List<User> likes=new ArrayList<>();
 
@@ -44,33 +47,17 @@ public class Post {
 
     public Post() {}
 
-    public Post(Integer id, String caption, String keywords, String category, String img, String video, User user, LocalDateTime createdAt, LocalDateTime updatedAt, List<User> likes, List<Comment> comments) {
+    public Post(Integer id, String caption, List<String> keywords, String category, List<String> images, String video, User user, LocalDateTime createdAt, LocalDateTime updatedAt, List<User> likes, List<Comment> comments) {
         this.id = id;
         this.caption = caption;
         this.keywords = keywords;
         this.category = category;
-        this.img = img;
+        this.images = images;
         this.video = video;
         this.user = user;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.likes = likes;
-        this.comments = comments;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
-    public List<Comment> getComments() {
-        return comments;
-    }
-
-    public void setComments(List<Comment> comments) {
         this.comments = comments;
     }
 
@@ -90,20 +77,28 @@ public class Post {
         this.caption = caption;
     }
 
-    public String getKeywords() {
+    public List<String> getKeywords() {
         return keywords;
     }
 
-    public void setKeywords(String keywords) {
+    public void setKeywords(List<String> keywords) {
         this.keywords = keywords;
     }
 
-    public String getImg() {
-        return img;
+    public String getCategory() {
+        return category;
     }
 
-    public void setImg(String img) {
-        this.img = img;
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public List<String> getImages() {
+        return images;
+    }
+
+    public void setImages(List<String> images) {
+        this.images = images;
     }
 
     public String getVideo() {
@@ -138,7 +133,6 @@ public class Post {
         this.updatedAt = updatedAt;
     }
 
-
     public List<User> getLikes() {
         return likes;
     }
@@ -147,11 +141,11 @@ public class Post {
         this.likes = likes;
     }
 
-//    public List<Comment> getComments() {
-//        return comments;
-//    }
-//
-//    public void setComments(List<Comment> comments) {
-//        this.comments = comments;
-//    }
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
 }
